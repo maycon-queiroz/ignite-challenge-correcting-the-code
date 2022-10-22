@@ -52,18 +52,16 @@ app.put("/repositories/:id", (request, response) => {
 
 app.delete("/repositories/:id", (request, response) => {
   const { id } = request.params;
-
-  if (!id) {
-    return response.status(404).json({ error: "Repository not found" });
-  }
-
+  
   const repository = repositories.find(currentRepository => currentRepository.id === id);
 
   if (!repository) {
     return response.status(404).json({ error: "Repository not found" });
   }
-
-  repositories.splice(repository, 1);
+  
+  const repositoryIndex = repositories.indexOf(repository)
+  
+  repositories.splice(repositoryIndex, 1);
 
   return response.status(204).send();
 });
